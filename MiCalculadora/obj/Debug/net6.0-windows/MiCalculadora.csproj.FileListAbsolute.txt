@@ -110,3 +110,7 @@ C:\Users\Usuario\OneDrive\Documentos\Github\UTN\PP_LABO2_05102023\MiCalculadora\
 C:\Users\Usuario\OneDrive\Documentos\Github\UTN\PP_LABO2_05102023\MiCalculadora\obj\Debug\net6.0-windows\MiCalculadora.pdb
 C:\Users\Usuario\OneDrive\Documentos\Github\UTN\PP_LABO2_05102023\MiCalculadora\obj\Debug\net6.0-windows\MiCalculadora.genruntimeconfig.cache
 C:\Users\Usuario\OneDrive\Documentos\Github\UTN\PP_LABO2_05102023\MiCalculadora\obj\Debug\net6.0-windows\ref\MiCalculadora.dll
+C:\Users\Usuario\OneDrive\Documentos\Github\UTN\PP_LABO2_05102023\MiCalculadora\bin\Debug\net6.0-windows\Entidades.dll
+C:\Users\Usuario\OneDrive\Documentos\Github\UTN\PP_LABO2_05102023\MiCalculadora\bin\Debug\net6.0-windows\Entidades.pdb
+C:\Users\Usuario\OneDrive\Documentos\Github\UTN\PP_LABO2_05102023\MiCalculadora\obj\Debug\net6.0-windows\MiCalculadora.csproj.AssemblyReference.cache
+C:\Users\Usuario\OneDrive\Documentos\Github\UTN\PP_LABO2_05102023\MiCalculadora\obj\Debug\net6.0-windows\MiCalculadora.csproj.CopyComplete

@@ -5,7 +5,6 @@ namespace Entidades
     {
         public SistemaDecimal(string valor) : base(valor)
         {
-            throw new System.NotImplementedException();
         }
 
         internal override double ValorNumerico

@@ -27,7 +27,7 @@ namespace Entidades
 
         public Calculadora(string nombreAlumno)
         {
-            throw new System.NotImplementedException();
+            this.nombreAlumno = nombreAlumno;
         }
 
         public string NombreAlumno
