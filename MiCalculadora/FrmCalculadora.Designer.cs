@@ -169,7 +169,6 @@
             txtPrimerOperador.Size = new Size(334, 53);
             txtPrimerOperador.TabIndex = 1;
             txtPrimerOperador.Text = "";
-            txtPrimerOperador.TextChanged += txtPrimerOperador_TextChanged;
             // 
             // txtSegundoOperador
             // 
@@ -179,7 +178,6 @@
             txtSegundoOperador.Size = new Size(336, 53);
             txtSegundoOperador.TabIndex = 3;
             txtSegundoOperador.Text = "";
-            txtSegundoOperador.TextChanged += txtSegundoOperador_TextChanged;
             // 
             // lblPrimerOperador
             // 
@@ -246,7 +244,7 @@
             lstHistorial.ItemHeight = 28;
             lstHistorial.Location = new Point(984, 200);
             lstHistorial.Name = "lstHistorial";
-            lstHistorial.Size = new Size(218, 420);
+            lstHistorial.Size = new Size(332, 420);
             lstHistorial.TabIndex = 18;
             // 
             // FrmCalculadora
@@ -254,7 +252,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
-            ClientSize = new Size(1262, 721);
+            ClientSize = new Size(1354, 721);
             Controls.Add(lstHistorial);
             Controls.Add(lblHistorial);
             Controls.Add(lblResultadoNumerico);

@@ -39,7 +39,7 @@
                 this.valor = valor;
             }
 
-            this.valor = "Numero Invalido";
+            this.valor = msgError;
         }
 
         public static bool operator ==(Numeracion numeracion1, Numeracion numeracion2)

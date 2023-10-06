@@ -25,7 +25,7 @@ namespace Entidades
             operaciones = new List<string>();
         }
 
-        public Calculadora(string nombreAlumno)
+        public Calculadora(string nombreAlumno) : this()
         {
             this.nombreAlumno = nombreAlumno;
         }
@@ -106,6 +106,11 @@ namespace Entidades
 
         public void Calcular(char operador)
         {
+            if (primerOperando is null || segundoOperando is null)
+            {
+                return;
+            }
+
             double resultado;
             switch (operador)
             {
@@ -149,12 +154,12 @@ namespace Entidades
         {
             StringBuilder sb = new ();
             sb.Append(Sistema);
-            sb.Append(" - ");
+            sb.Append(": ");
             sb.Append(PrimerOperando);
             sb.Append(operador);
             sb.Append(SegundoOperando);
             sb.Append(" = ");
-            sb.Append(Resultado);
+            sb.Append(Resultado.ValorNumerico);
             
             operaciones.Add(sb.ToString());
         }

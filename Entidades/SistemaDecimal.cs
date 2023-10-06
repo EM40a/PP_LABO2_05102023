@@ -17,16 +17,20 @@ namespace Entidades
 
         public override Numeracion CambiarSistemaDeNumeracion(ESistema sistema)
         {
-            //TODO
-            return DecimalABinario();
+            return (sistema == ESistema.Decimal) ? DecimalABinario() : new SistemaBinario(valor);
         }
 
         private SistemaBinario DecimalABinario()
         {
-            if (!int.TryParse(this.valor, out int valorDecimal) || valorDecimal <= 0)
+            if (!int.TryParse(valor, out int valorDecimal))
             {
-                return new SistemaBinario("Valor inválido");
+                if (valorDecimal <= 0)
+                {
+                    return new SistemaBinario(msgError);
+
+                }
             }
+
 
             string valorBinario = "";
 
@@ -35,7 +39,7 @@ namespace Entidades
                 valorBinario = (valorDecimal % 2) + valorBinario;
                 valorDecimal /= 2;
             }
-            while (ValorNumerico >= 2);
+            while (valorDecimal >= 2);
             valorBinario = valorDecimal + valorBinario;
 
             return new SistemaBinario(valorBinario);

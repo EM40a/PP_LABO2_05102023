@@ -10,17 +10,17 @@ namespace MiCalculadora
         public FrmCalculadora()
         {
             InitializeComponent();
-            this.calculadora = new Calculadora("S.Emanuel y Hermosilla");
+            this.calculadora = new Calculadora("S.Emanuel Hermosilla");
         }
 
         //? El formulario se encuentra en memoria pero invisible
         private void FrmCalculadora_Load(object sender, EventArgs e)
         {
-            this.cmbOperacion.DataSource = new char[] { '+', '-', '*', '/' };
-            this.Text = calculadora.NombreAlumno;
-            this.MaximizeBox = false;
+            cmbOperacion.DataSource = new char[] { '+', '-', '*', '/' };
+            Text = calculadora.NombreAlumno;
+            MaximizeBox = false;
             this.MinimizeBox = false;
-            this.cmbOperacion.SelectedIndex = 0;
+            cmbOperacion.SelectedIndex = 0;
         }
 
         //? Comienza el cierre del Form, se puede cancelar
@@ -63,21 +63,10 @@ namespace MiCalculadora
             }
         }
 
-        //* Instancia los operadores con los valores de los TextBox
-        private void txtPrimerOperador_TextChanged(object sender, EventArgs e)
-        {
-            //this.primerOperando = new(txtPrimerOperador.Text, Numeracion.ESistema.Decimal);
-        }
-        private void txtSegundoOperador_TextChanged(object sender, EventArgs e)
-        {
-            //this.segundoOperando = new(txtSegundoOperador.Text, Numeracion.ESistema.Decimal);
-        }
-
-
         private void MostrarHistorial()
         {
             lstHistorial.DataSource = null;
-            this.lstHistorial.DataSource = calculadora.Operaciones;
+            lstHistorial.DataSource = calculadora.Operaciones;
         }
 
         private void btnOperar_Click(object sender, EventArgs e)
@@ -85,13 +74,13 @@ namespace MiCalculadora
             char operador;
             calculadora.PrimerOperando = GetOperando(txtPrimerOperador.Text);
             calculadora.SegundoOperando = GetOperando(txtSegundoOperador.Text);
-            
-            operador = (char) cmbOperacion.SelectedItem;
-            
+
+            operador = (char)cmbOperacion.SelectedItem;
+
             calculadora.Calcular(operador);
             calculadora.ActualizarHistorialDeOperaciones(operador);
-            
-            lblResultado.Text = $"Resultado: { calculadora.Resultado.Valor}";
+
+            lblResultadoNumerico.Text = calculadora.Resultado.Valor;
             MostrarHistorial();
         }
 
@@ -100,15 +89,12 @@ namespace MiCalculadora
             Close();
         }
 
-        /// <summary>
-        /// Borra los datos de los TextBox, Label de resultado de la pantalla y también asignará null al atributo resultado del formulario
-        /// </summary>
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             calculadora.EliminarHistorialDeOperaciones();
             txtPrimerOperador.Text = string.Empty;
             txtSegundoOperador.Text = string.Empty;
-            lblResultado.Text = $"Resultado: ";
+            lblResultadoNumerico.Text = string.Empty;
             MostrarHistorial();
         }
     }
