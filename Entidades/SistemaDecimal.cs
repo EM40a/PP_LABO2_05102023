@@ -11,26 +11,31 @@ namespace Entidades
         {
             get
             {
-                return (double)CambiarSistemaDeNumeracion(ESistema.Decimal);
+                if (double.TryParse(valor, out double valorNumerico))
+                {
+                    return valorNumerico;
+                }
+                return double.MinValue;
             }
         }
 
+
         public override Numeracion CambiarSistemaDeNumeracion(ESistema sistema)
         {
-            return (sistema == ESistema.Decimal) ? DecimalABinario() : new SistemaBinario(valor);
+            return (sistema == ESistema.Decimal) ? new SistemaDecimal(valor) : new SistemaDecimal(valor);
         }
+
 
         private SistemaBinario DecimalABinario()
         {
             if (!int.TryParse(valor, out int valorDecimal))
             {
-                if (valorDecimal <= 0)
+                if (valorDecimal < 0)
                 {
                     return new SistemaBinario(msgError);
 
                 }
             }
-
 
             string valorBinario = "";
 
@@ -47,7 +52,7 @@ namespace Entidades
 
         protected override bool EsNumeracionValida(string valor)
         {
-            return base.EsNumeracionValida(valor) && EsSistemaDecimalValido(valor);
+            return EsSistemaDecimalValido(valor);
         }
 
         private bool EsSistemaDecimalValido(string valor)

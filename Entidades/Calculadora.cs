@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 
 namespace Entidades
 {
@@ -32,7 +28,7 @@ namespace Entidades
 
         public string NombreAlumno
         {
-            get 
+            get
             {
                 return nombreAlumno;
             }
@@ -44,7 +40,7 @@ namespace Entidades
 
         public List<string> Operaciones
         {
-            get 
+            get
             {
                 return operaciones;
             }
@@ -52,7 +48,7 @@ namespace Entidades
 
         public static ESistema Sistema
         {
-            get 
+            get
             {
                 return sistema;
             }
@@ -72,20 +68,20 @@ namespace Entidades
 
         public Numeracion PrimerOperando
         {
-            get 
+            get
             {
                 return primerOperando;
             }
             set
             {
-                resultado = value;
+                primerOperando = value;
             }
         }
 
         public Numeracion SegundoOperando
         {
-            get 
-            { 
+            get
+            {
                 return segundoOperando;
             }
             set
@@ -96,12 +92,14 @@ namespace Entidades
 
         public void Calcular()
         {
-            if (this.primerOperando != this.segundoOperando)
+            if (primerOperando != segundoOperando)
             {
-                this.resultado =  new SistemaDecimal(double.MinValue.ToString());
+                resultado = new SistemaDecimal(double.MinValue.ToString());
             }
-
-            Calcular('+');
+            else
+            {
+                Calcular('+');
+            }
         }
 
         public void Calcular(char operador)
@@ -111,26 +109,26 @@ namespace Entidades
                 return;
             }
 
-            double resultado;
+
             switch (operador)
             {
                 case '+':
-                    resultado = primerOperando.ValorNumerico + segundoOperando.ValorNumerico;
+                    resultado = primerOperando + segundoOperando;
                     break;
                 case '-':
-                    resultado = primerOperando.ValorNumerico - segundoOperando.ValorNumerico;
+                    resultado = primerOperando - segundoOperando;
                     break;
                 case '*':
-                    resultado = primerOperando.ValorNumerico * segundoOperando.ValorNumerico;
+                    resultado = primerOperando * segundoOperando;
                     break;
                 case '/':
-                    resultado = primerOperando.ValorNumerico / segundoOperando.ValorNumerico;
+                    resultado = primerOperando / segundoOperando;
                     break;
                 default:
-                    resultado = double.MinValue;
+                    resultado = new SistemaDecimal(double.MinValue.ToString());
                     break;
             }
-            MapeaResultado(resultado);
+            MapeaResultado((double) resultado);
         }
 
         public void EliminarHistorialDeOperaciones()
@@ -140,28 +138,33 @@ namespace Entidades
 
         private Numeracion MapeaResultado(double valor)
         {
-            if (sistema == ESistema.Binario)
+
+            string valorStr = valor.ToString();
+
+            switch (sistema)
             {
-                return new SistemaBinario(valor.ToString());
-            }
-            else 
-            {
-                return new SistemaDecimal(valor.ToString());
+                 case ESistema.Binario:
+                    return new SistemaBinario(valorStr);
+                
+                 case ESistema.Decimal:
+                 default:
+                    return new SistemaDecimal(valorStr);
             }
         }
 
         public void ActualizarHistorialDeOperaciones(char operador)
         {
-            StringBuilder sb = new ();
+            StringBuilder sb = new();
             sb.Append(Sistema);
             sb.Append(": ");
-            sb.Append(PrimerOperando);
+            sb.Append(primerOperando.Valor);
+            sb.Append(' ');
             sb.Append(operador);
-            sb.Append(SegundoOperando);
-            sb.Append(" = ");
-            sb.Append(Resultado.ValorNumerico);
-            
-            operaciones.Add(sb.ToString());
+            sb.Append(' ');
+            sb.Append(segundoOperando.Valor);
+            sb.Append('=');
+            sb.Append(resultado.Valor);
+            operaciones.Add(sb.ToString()); 
         }
     }
 }

@@ -42,14 +42,8 @@ namespace Entidades
             return true;
         }
 
-
         private SistemaDecimal BinarioADecimal()
         {
-            if (string.IsNullOrEmpty(msgError))
-            {
-                return double.MinValue;
-            }
-
             double valorDecimal = 0;
             int potencia = 0;
 
@@ -57,7 +51,7 @@ namespace Entidades
             {
                 if (valor[i] == '1')
                 {
-                    valorDecimal += Math.Pow(2, potencia); // 2 ^ x
+                    valorDecimal += Math.Pow(2, potencia); // 2 ^ potencia
                 }
 
                 potencia++;
@@ -65,6 +59,7 @@ namespace Entidades
 
             return new SistemaDecimal(valorDecimal.ToString());
         }
+
 
         public static implicit operator SistemaBinario(string valor)
         {

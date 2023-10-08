@@ -29,7 +29,7 @@
 
         protected virtual bool EsNumeracionValida(string valor)
         {
-            return string.IsNullOrWhiteSpace(valor);
+            return !string.IsNullOrWhiteSpace(valor);
         }
 
         private void InicializaValor(string valor)
@@ -38,14 +38,16 @@
             {
                 this.valor = valor;
             }
-
-            this.valor = msgError;
+            else
+            {
+                this.valor = msgError;
+            }
         }
 
         public static bool operator ==(Numeracion numeracion1, Numeracion numeracion2)
         {
-            bool ambasNulas = numeracion1 is null && numeracion2 is null;
             bool mismoTipo = numeracion1.GetType() == numeracion2.GetType();
+            bool ambasNulas = numeracion1 is null && numeracion2 is null;
 
             return !ambasNulas && mismoTipo;
         }
@@ -58,6 +60,31 @@
         public static explicit operator double(Numeracion numeracion)
         {
             return numeracion.ValorNumerico;
+        }
+
+        //* Los operadores realizarán las operaciones correspondientes entre dos números.
+        public static Numeracion operator +(Numeracion numeracion1, Numeracion numeracion2)
+        {
+            double resultado = numeracion1.ValorNumerico + numeracion2.ValorNumerico;
+            return new SistemaDecimal(resultado.ToString());
+        }
+
+        public static Numeracion operator -(Numeracion numeracion1, Numeracion numeracion2)
+        {
+            double resultado = numeracion1.ValorNumerico - numeracion2.ValorNumerico;
+            return new SistemaDecimal(resultado.ToString());
+        }
+
+        public static Numeracion operator *(Numeracion numeracion1, Numeracion numeracion2)
+        {
+            double resultado = numeracion1.ValorNumerico * numeracion2.ValorNumerico;
+            return new SistemaDecimal(resultado.ToString());
+        }
+
+        public static Numeracion operator /(Numeracion numeracion1, Numeracion numeracion2)
+        {
+            double resultado = numeracion1.ValorNumerico / numeracion2.ValorNumerico;
+            return new SistemaDecimal(resultado.ToString());
         }
     }
 }
