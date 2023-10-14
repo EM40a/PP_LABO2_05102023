@@ -3,63 +3,70 @@ namespace Entidades
 {
     public class SistemaDecimal : Numeracion
     {
-        public SistemaDecimal(string valor) : base(valor)
-        {
-        }
+        public SistemaDecimal(string valor) : base(valor) { }
 
-        internal override double ValorNumerico
-        {
-            get
-            {
-                if (double.TryParse(valor, out double valorNumerico))
-                {
-                    return valorNumerico;
-                }
-                return double.MinValue;
-            }
-        }
+        internal override double ValorNumerico { get => (double)this; }
 
-
+        #region Metodos
+        /// <summary>
+        /// Cambia el sistema de numeracion segun el que sistema que recibe.
+        /// </summary>
+        /// <returns>Una numeracion en el sistema recibido</returns>
         public override Numeracion CambiarSistemaDeNumeracion(ESistema sistema)
         {
-            return (sistema == ESistema.Decimal) ? new SistemaDecimal(valor) : new SistemaDecimal(valor);
+            if (sistema == ESistema.Binario)
+            {
+                return this.DecimalABinario();
+            }
+            //else if (sistema == ESistema.Octal)
+            //{
+            //    TODO
+            //}
+            return this;
         }
 
-
+        /// <summary>
+        /// Convierte un numero decimal a binario.
+        /// </summary>
+        /// <returns>Un numero en sistema binario</returns>
         private SistemaBinario DecimalABinario()
         {
-            if (!int.TryParse(valor, out int valorDecimal))
-            {
-                if (valorDecimal < 0)
-                {
-                    return new SistemaBinario(msgError);
+            int valorEntero = (int) this.ValorNumerico;
+            string valorBinario = string.Empty;
 
-                }
+            if (valorEntero < 0)
+            {
+                return Numeracion.msgError;
             }
 
-            string valorBinario = "";
-
-            do
+            while (valorEntero > 0) ;
             {
-                valorBinario = (valorDecimal % 2) + valorBinario;
-                valorDecimal /= 2;
+                int resto = valorEntero % 2;
+                valorEntero /= 2;
+                valorBinario = resto + valorBinario;
             }
-            while (valorDecimal >= 2);
-            valorBinario = valorDecimal + valorBinario;
 
-            return new SistemaBinario(valorBinario);
+            return valorBinario;
         }
+        #endregion
 
+        #region Sobrecarga de operadores
+        /// <summary>
+        /// Verifica que el valor recibido sea un numero decimal valido y que no sea nulo o contenga espacios.
+        /// </summary>
         protected override bool EsNumeracionValida(string valor)
         {
-            return EsSistemaDecimalValido(valor);
+            return base.EsNumeracionValida(valor) && this.EsSistemaDecimalValido(valor);
         }
 
+        /// <summary>
+        /// Verifica que el valor recibido sea un numero decimal valido.
+        /// </summary>
         private bool EsSistemaDecimalValido(string valor)
         {
-            return double.TryParse(valor, out double numero);
+            return double.TryParse(valor, out _);
         }
-
+        
         public static implicit operator SistemaDecimal(double valor)
         {
             return new SistemaDecimal(valor.ToString());
@@ -69,5 +76,6 @@ namespace Entidades
         {
             return new SistemaDecimal(valor);
         }
+        #endregion
     }
 }

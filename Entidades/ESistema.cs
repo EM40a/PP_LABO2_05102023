@@ -1,5 +1,9 @@
-﻿public enum ESistema
+﻿
+namespace Entidades
 {
-    Decimal,
-    Binario
+    public enum ESistema { 
+        Binario,
+        Decimal,
+        Octal
+    };
 }

@@ -5,86 +5,90 @@
         protected static string msgError;
         protected string valor;
 
+        #region Constructores
         static Numeracion()
         {
-            msgError = "Numero Invalido";
+            Numeracion.msgError = "Numero Invalido";
         }
 
         protected Numeracion(string valor)
         {
-            InicializaValor(valor);
+            this.InicializaValor(valor);
         }
+        #endregion
 
-        public string Valor
+        #region Propiedades
+        public string Valor { get => valor; }
+        internal abstract double ValorNumerico { get; }
+        #endregion
+
+        #region Metodos
+        /// <summary>
+        /// Inicializa el atributo si el valor recibido es valido, en caso contrario lo inicializa con un mensaje de error.
+        /// </summary>
+        /// <param name="valor">Es el valor que va a tomar la numeracion</param>
+        private void InicializaValor(string valor)
         {
-            get 
-            {
-                return valor;
-            }
+            this.valor = EsNumeracionValida(valor) ? valor : Numeracion.msgError;
         }
 
-        internal abstract double ValorNumerico{ get; }
-
+        /// <summary>
+        /// Metodo abstracto que cambia el sistema de la numeracion segun el sistema recibido.
+        /// </summary>
         public abstract Numeracion CambiarSistemaDeNumeracion(ESistema sistema);
 
+        /// <summary>
+        /// Verifica que el valor recibido no sea nulo o contenga espacios.
+        /// </summary>
         protected virtual bool EsNumeracionValida(string valor)
         {
             return !string.IsNullOrWhiteSpace(valor);
         }
+        #endregion
 
-        private void InicializaValor(string valor)
+        #region Sobrecargas de operadores
+        /// <summary>
+        /// Dos numeraciones seran iguales si ninguna es nulas y ambas son del mismo tipo.
+        /// </summary>
+        public static bool operator ==(Numeracion n1, Numeracion n2)
         {
-            if (EsNumeracionValida(valor))
-            {
-                this.valor = valor;
-            }
-            else
-            {
-                this.valor = msgError;
-            }
+            return (n1 is not null && n2 is not null) && (n1.GetType() == n2.GetType());
         }
 
-        public static bool operator ==(Numeracion numeracion1, Numeracion numeracion2)
+        /// <summary>
+        /// Dos numeraciones seran distintas si ambas son nulas o si no son del mismo tipo.
+        /// </summary>
+        public static bool operator !=(Numeracion n1, Numeracion n2)
         {
-            bool mismoTipo = numeracion1.GetType() == numeracion2.GetType();
-            bool ambasNulas = numeracion1 is null && numeracion2 is null;
-
-            return !ambasNulas && mismoTipo;
-        }
-
-        public static bool operator !=(Numeracion numeracion1, Numeracion numeracion2)
-        {
-            return !(numeracion1 == numeracion2);
+            return !(n1 == n2);
         }
 
         public static explicit operator double(Numeracion numeracion)
         {
-            return numeracion.ValorNumerico;
+            double.TryParse(numeracion.valor, out double resultado);
+            return resultado;
         }
 
         //* Los operadores realizarán las operaciones correspondientes entre dos números.
-        public static Numeracion operator +(Numeracion numeracion1, Numeracion numeracion2)
+        public static double operator +(Numeracion n1, Numeracion n2)
         {
-            double resultado = numeracion1.ValorNumerico + numeracion2.ValorNumerico;
-            return new SistemaDecimal(resultado.ToString());
+            return n1.ValorNumerico + n2.ValorNumerico;
         }
 
-        public static Numeracion operator -(Numeracion numeracion1, Numeracion numeracion2)
+        public static double operator -(Numeracion n1, Numeracion n2)
         {
-            double resultado = numeracion1.ValorNumerico - numeracion2.ValorNumerico;
-            return new SistemaDecimal(resultado.ToString());
+            return n1.ValorNumerico - n2.ValorNumerico;
         }
 
-        public static Numeracion operator *(Numeracion numeracion1, Numeracion numeracion2)
+        public static double operator *(Numeracion n1, Numeracion n2)
         {
-            double resultado = numeracion1.ValorNumerico * numeracion2.ValorNumerico;
-            return new SistemaDecimal(resultado.ToString());
+            return n1.ValorNumerico * n2.ValorNumerico;
         }
 
-        public static Numeracion operator /(Numeracion numeracion1, Numeracion numeracion2)
+        public static double operator /(Numeracion n1, Numeracion n2)
         {
-            double resultado = numeracion1.ValorNumerico / numeracion2.ValorNumerico;
-            return new SistemaDecimal(resultado.ToString());
+            return n1.ValorNumerico / n2.ValorNumerico;
         }
+        #endregion
     }
 }
